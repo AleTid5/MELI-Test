@@ -3,39 +3,31 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const { assertOrFail } = require('./utils/helpers');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const routerItems  = require('./routes/items');
 
 const app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Url's de la API.
+app.use('/api/items', routerItems);
+
+// Funciones a utilizar en el sistema.
+app.locals.assertOrFail = assertOrFail;
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.json({message: "La ruta solicitada no existe."});
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.send({message: "Hubo un error en el servidor.", error: err.toString()});
 });
 
 module.exports = app;
