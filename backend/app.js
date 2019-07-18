@@ -1,33 +1,36 @@
-const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const { assertOrFail } = require('./utils/helpers');
-
+const { helpers } = require('./utils/helpers');
+const cors = require('cors');
 const routerItems  = require('./routes/items');
-
 const app = express();
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cors());
+app.set("port", process.env.port || process.env.PORT || 9000);
 
-// Url's de la API.
+/**
+ * Server endpoints.
+ */
 app.use('/api/items', routerItems);
 
-// Funciones a utilizar en el sistema.
-app.locals.assertOrFail = assertOrFail;
+/**
+ * Injects helpers functions as Native in all app.
+ */
+app.locals.helpers = helpers;
 
-// catch 404 and forward to error handler
+/**
+ * When a route is not found previously, it is caught here.
+ */
 app.use(function(req, res, next) {
-  res.json({message: "La ruta solicitada no existe."});
+  res.status(404).json({message: "La ruta solicitada no existe."});
 });
 
-// error handler
+/**
+ * When the server has an uncontrolled exception, it' s caught here.
+ */
 app.use(function(err, req, res, next) {
-  res.send({message: "Hubo un error en el servidor.", error: err.toString()});
+  res.status(500).json({message: "Hubo un error en el servidor.", error: err.toString()});
 });
 
 module.exports = app;
