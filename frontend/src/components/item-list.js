@@ -1,11 +1,14 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
+import api from '../utils/api/api_items';
+import Breadcrumb from './base/breadcrumbs';
+import Loader from './base/loader';
+import NoData from './base/no-data';
 import {
   Row,
   Col,
   Card
 } from 'reactstrap';
 import shippingIcon from '../assets/img/ic_shipping.png';
-import api from '../utils/api/api';
 import qs from "qs";
 
 class ItemList extends Component {
@@ -32,7 +35,7 @@ class ItemList extends Component {
 
   search() {
     if (this.getCleanSearch() !== "") {
-      api.searchItem(this.getCleanSearch()).then(response => {
+      api.searchItems(this.getCleanSearch()).then(response => {
         this.setState({
           categories: response.categories || [],
           items: response.items || [],
@@ -51,37 +54,16 @@ class ItemList extends Component {
     this.setState({ selectedItem: item })
   }
 
-  static loading() {
-    return (
-        <div className="info">
-          <h3>Cargando...</h3>
-        </div>
-    );
-  }
-
-  static noDataFound() {
-    return (
-        <div className="info">
-          <h3>No hay publicaciones que coincidan con tu búsqueda.</h3>
-          <ul>
-            <li>Revisá la ortografía de la palabra.</li>
-            <li>Utilizá palabras más genéricas o menos palabras.</li>
-          </ul>
-        </div>
-    );
-  }
-
   renderItemList() {
-    if (! this.state.isReady) return ItemList.loading();
+    if (! this.state.isReady) return (<Loader />);
 
-    if (! this.state.items.length) return ItemList.noDataFound();
+    if (! this.state.items.length) return (<NoData />);
 
     return this.state.items.map((item, key) => {
       return (
           <div key={key} className="d-flex item-content">
             <div className="thumbnail" onClick={() => this.goToItem(item)}>
-              <img src={item.picture}
-                   alt="Picture" />
+              <img src={item.picture} alt="The item" />
             </div>
             <div className="info">
               <div className="d-inline-flex">
@@ -95,19 +77,13 @@ class ItemList extends Component {
     });
   }
 
-  renderBreadcrumbs() {
-    return this.state.categories.map((item, key) => {
-      return ( <span key={key}>{item} {this.state.categories.length === key + 1 || '> '}</span> );
-    });
-  }
-
   render() {
     return (
         <React.Fragment>
           <Row>
             <Col md={{ size: 8, offset: 2 }} className="pb-5">
               <div className="text-left breadcrumbs">
-                { this.renderBreadcrumbs() }
+                <Breadcrumb categories={this.state.categories} />
               </div>
               <Card md="12" className="card-body">
                 <Row>

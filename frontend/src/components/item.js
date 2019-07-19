@@ -1,7 +1,9 @@
 import React, { Component } from "react"
-import { Button, Card, CardBody, Col, Row} from 'reactstrap';
-import api from '../utils/api/api';
-import shippingIcon from "../assets/img/ic_shipping.png";
+import { Button, Card, Col, Row} from 'reactstrap';
+import api from '../utils/api/api_items';
+import Breadcrumb from "./base/breadcrumbs";
+import Loader from './base/loader';
+import NoData from './base/no-data';
 
 class Item extends Component {
   constructor(props) {
@@ -29,49 +31,30 @@ class Item extends Component {
         .substr(this.props.props.location.pathname.lastIndexOf('/') + 1);
 
     api.searchItemById(itemId).then(response => {
-      console.log(response);
-      //this.setState({ item: response });
+      console.log(response)
+      this.setState({
+        item: response.item,
+        isReady: true
+      });
     })
   }
 
-  static loading() {
-    return (
-        <div className="info">
-          <h3>Cargando...</h3>
-        </div>
-    );
-  }
+  renderItem() {
+    if (! this.state.isReady) return (<Loader />);
 
-  static noDataFound() {
-    return (
-        <div className="info">
-          <h3>No hay publicaciones que coincidan con tu búsqueda.</h3>
-          <ul>
-            <li>Revisá la ortografía de la palabra.</li>
-            <li>Utilizá palabras más genéricas o menos palabras.</li>
-          </ul>
-        </div>
-    );
-  }
-
-  renderItemList() {
-    if (! this.state.isReady) return Item.loading();
-
-    if (! this.state.items.length) return Item.noDataFound();
+    if (! Object.keys(this.state.item).length) return (<NoData />);
 
     return (
         <Row>
           <Col className="col-md-8">
-            <img src={this.state.item.thumbnail} alt="Product" />
+            <img src={this.state.item.picture} alt="Product" />
             <h3>Descripción del producto</h3>
-            <p>
-              {this.state.item.id}
-            </p>
+            <p>{this.state.item.id}</p>
           </Col>
           <Col className="col-md-4 item-description">
             <p>{this.state.item.condition === "new" ? "Nuevo" : "Usado"} - {this.state.item.sold_quantity} vendidos</p>
             <h3>{this.state.item.title}</h3>
-            <h2>${this.state.item.price}</h2>
+            <h2>${this.state.item.price.amount}</h2>
             <Button block={true} color="primary">Comprar</Button>
           </Col>
         </Row>
@@ -80,7 +63,10 @@ class Item extends Component {
 
   renderBreadcrumbs() {
     return this.state.categories.map((item, key) => {
-      return ( <span key={key}>{item} {this.state.categories.length === key + 1 || '> '}</span> );
+      const isLast = this.state.categories.length === key + 1;
+      return (
+        <span key={key} className="font-weight-bold">{item} {! isLast && '> '}</span>
+      );
     });
   }
 
@@ -90,10 +76,10 @@ class Item extends Component {
           <Row>
             <Col md={{ size: 8, offset: 2 }} className="pb-5">
               <div className="text-left breadcrumbs">
-                { this.renderBreadcrumbs() }
+                <Breadcrumb categories={this.state.categories} />
               </div>
               <Card md="12" className="card-body">
-
+                { this.renderItem() }
               </Card>
             </Col>
           </Row>
