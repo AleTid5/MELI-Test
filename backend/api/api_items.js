@@ -1,6 +1,10 @@
 const config = require('./_config');
 const Api = require('./api');
 
+/**
+ * Api of items.
+ * @type {module.ApiItems}
+ */
 module.exports = class ApiItems extends Api {
   constructor() {
     super(config.apiURL);
