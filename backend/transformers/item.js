@@ -1,4 +1,4 @@
-const ItemResponse = require('./ItemResponse');
+const ItemResponse = require('./item_response');
 
 /**
  * The main transformer of a single item.

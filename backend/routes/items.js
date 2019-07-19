@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../config');
-const Item = require('../transformers/Item');
-const ItemList = require('../transformers/ItemList');
+const ApiItems = require('../api/api_items');
+const Item = require('../transformers/item');
+const ItemList = require('../transformers/item_list');
+
+const apiItems = new ApiItems();
 
 const serverResponse = {
   status: 200,
@@ -16,7 +18,7 @@ router.get('/', async (req, res, next) => {
   try {
     const search = req.query.q;
     assertOrFail(search, 'No se ha enviado ningun parámetro de búsqueda.');
-    const response = await getFrom(config.itemsList(search));
+    const response = await apiItems.getItemsListByQuery(search);
     serverResponse.response = new ItemList(response);
   } catch (e) {
     serverResponse.status = e.code;
@@ -33,8 +35,8 @@ router.get('/:id', async (req, res, next) => {
   try {
     const itemId = req.params.id;
     assertOrFail(itemId, 'No se ha enviado ningun id de búsqueda.');
-    const response = await getFrom(`/items/${itemId}`);
-    response.description = (await getFrom(config.itemDescription(itemId))).plain_text;
+    const response = await apiItems.getItemById(itemId);
+    response.description = (await apiItems.getItemDescriptionById(itemId)).plain_text;
     serverResponse.response = new Item(response);
   } catch (e) {
     serverResponse.status = e.code;
