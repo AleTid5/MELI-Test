@@ -9,6 +9,7 @@ class Item extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.state.categories = props.props.location.state.categories;
   }
 
   state = {

@@ -8,7 +8,7 @@ class ItemDescription extends Component {
         return (
             <React.Fragment>
                 <div className="app">
-                    <Search history={this.props.history} />
+                    <Search search={this.props.location.state.search} history={this.props.history} />
                     <Item props={this.props} />
                 </div>
             </React.Fragment>

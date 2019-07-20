@@ -38,10 +38,14 @@ class Search extends Component {
           <React.Fragment>
               <div className="app-header">
                   <Row>
-                      <Col md={{ size: 1, offset: 2 }} sm={{ size: 1 }} xs={{ size: 1 }}>
+                      <Col md={{ size: 1, offset: 2 }}
+                           sm={{ size: 1 }}
+                           xs={{ size: 2 }}>
                           <img src={logoImg} onClick={this.backToIndex} alt="LOGO" className="clickable"/>
                       </Col>
-                      <Col md={{ size: 7, offset: 0 }} sm={{ size: 10 }} xs={{ size: 9, offset: 1 }}>
+                      <Col md={{ size: 7, offset: 0 }}
+                           sm={{ size: 10 }}
+                           xs={{ size: 9, offset: 1 }}>
                           <InputGroup>
                               <Input
                                 className="input-search"

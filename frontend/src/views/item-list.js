@@ -10,7 +10,7 @@ class Home extends Component {
             <React.Fragment>
                 <div className="app">
                     <Search search={this.props.location.search} history={this.props.history} />
-                    <ItemList search={this.props.location.search} history={this.props.history} />
+                    <ItemList search={this.props.location.search} history={this.props.history} categories={[]}/>
                 </div>
             </React.Fragment>
         );

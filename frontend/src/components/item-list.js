@@ -1,15 +1,11 @@
 import React, { Component } from "react";
+import { Card, Col, Row} from 'reactstrap';
+import qs from "qs";
 import api from '../utils/api/api_items';
 import Breadcrumb from './base/breadcrumbs';
 import Loader from './base/loader';
 import NoData from './base/no-data';
-import {
-  Row,
-  Col,
-  Card
-} from 'reactstrap';
 import shippingIcon from '../assets/img/ic_shipping.png';
-import qs from "qs";
 
 class ItemList extends Component {
   constructor(props) {
@@ -50,7 +46,13 @@ class ItemList extends Component {
   }
 
   goToItem(item) {
-    this.props.history.push('/items/' + item.id);
+    this.props.history.push({
+      pathname: '/items/' + item.id,
+      state: {
+        categories: this.state.categories,
+        search: this.props.search,
+      }
+    });
     this.setState({ selectedItem: item })
   }
 

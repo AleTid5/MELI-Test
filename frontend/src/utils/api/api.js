@@ -10,7 +10,6 @@ export default class Api {
   }
 
   async getFrom(uri) {
-    return await this.api.get(uri)
-        .then(response => response.data);
+    return await this.api.get(uri).then(response => response.data);
   }
 }
