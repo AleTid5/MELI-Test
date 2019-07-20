@@ -9,7 +9,7 @@ class Item extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state.categories = props.props.location.state.categories;
+    this.state.categories = props.props.location.state ? props.props.location.state.categories : [];
   }
 
   state = {
@@ -47,12 +47,14 @@ class Item extends Component {
 
     return (
         <Row>
-          <Col className="col-md-8">
-            <img src={this.state.item.picture} alt="Product" />
+          <Col className="col-8 item-header">
+            <div className="image-container">
+              <img src={this.state.item.pictures[0]} alt="Product" />
+            </div>
             <h3>Descripción del producto</h3>
-            <p>{this.state.item.id}</p>
+            <p>{this.state.item.description}</p>
           </Col>
-          <Col className="col-md-4 item-description">
+          <Col className="col-4 item-body">
             <p>{this.state.item.condition === "new" ? "Nuevo" : "Usado"} - {this.state.item.sold_quantity} vendidos</p>
             <h3>{this.state.item.title}</h3>
             <h2>${this.state.item.price.amount}</h2>
@@ -79,7 +81,7 @@ class Item extends Component {
               <div className="text-left breadcrumbs">
                 <Breadcrumb categories={this.state.categories} />
               </div>
-              <Card md="12" className="card-body">
+              <Card md="12" className="card-body item-description">
                 { this.renderItem() }
               </Card>
             </Col>

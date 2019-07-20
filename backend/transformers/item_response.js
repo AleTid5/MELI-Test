@@ -29,6 +29,7 @@ module.exports = class ItemResponse extends Response{
     };
 
     if (dirtyItem.description !== undefined) baseModel.description = dirtyItem.description;
+    if (dirtyItem.pictures !== undefined) baseModel.pictures = dirtyItem.pictures.map(picture => picture.url);
     if (dirtyItem.sold_quantity !== undefined) baseModel.sold_quantity = dirtyItem.sold_quantity;
 
     return baseModel;

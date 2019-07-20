@@ -15,7 +15,6 @@ class ItemList extends Component {
 
   state = {
     items: [],
-    selectedItem: null,
     categories: [],
     isReady: false
   };
@@ -45,7 +44,7 @@ class ItemList extends Component {
     return qs.parse(this.props.search, { ignoreQueryPrefix: true }).search;
   }
 
-  goToItem(item) {
+  jumpToItem(item) {
     this.props.history.push({
       pathname: '/items/' + item.id,
       state: {
@@ -53,7 +52,6 @@ class ItemList extends Component {
         search: this.props.search,
       }
     });
-    this.setState({ selectedItem: item })
   }
 
   renderItemList() {
@@ -64,7 +62,7 @@ class ItemList extends Component {
     return this.state.items.map((item, key) => {
       return (
           <div key={key} className="d-flex item-content">
-            <div className="thumbnail" onClick={() => this.goToItem(item)}>
+            <div className="thumbnail" onClick={() => this.jumpToItem(item)}>
               <img src={item.picture} alt="The item" />
             </div>
             <div className="info">
@@ -72,7 +70,7 @@ class ItemList extends Component {
                 <h3>$ {item.price.amount}</h3>
                 {item.free_shipping && <img src={shippingIcon} className="shipping-icon" alt="Free Shipping" />}
               </div>
-              <p onClick={() => this.goToItem(item)}>{item.title}</p>
+              <p onClick={() => this.jumpToItem(item)}>{item.title}</p>
             </div>
           </div>
       );
