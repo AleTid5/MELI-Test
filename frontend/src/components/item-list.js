@@ -6,6 +6,7 @@ import Breadcrumb from './base/breadcrumbs';
 import Loader from './base/loader';
 import NoData from './base/no-data';
 import shippingIcon from '../assets/img/ic_shipping.png';
+import { formatAsCurrency } from "../utils/helpers";
 
 class ItemList extends Component {
   constructor(props) {
@@ -67,8 +68,11 @@ class ItemList extends Component {
             </div>
             <div className="info">
               <div className="d-inline-flex">
-                <h3>$ {item.price.amount}</h3>
-                {item.free_shipping && <img src={shippingIcon} className="shipping-icon" alt="Free Shipping" />}
+                <h3>$ { formatAsCurrency(item.price.amount) }</h3>
+                {item.free_shipping && <img src={shippingIcon}
+                                            className="shipping-icon"
+                                            title="Envío gratis a todo el país"
+                                            alt="Free Shipping" />}
               </div>
               <p onClick={() => this.jumpToItem(item)}>{item.title}</p>
             </div>
