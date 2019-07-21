@@ -171,7 +171,12 @@ body {
       .image-container {
         @extend .mt-32;
         width: 100%;
+
+        .slider.animated {
+          height: 680px;
+        }
       }
+
     }
 
     .item-body {
