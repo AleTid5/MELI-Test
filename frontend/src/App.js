@@ -5,9 +5,8 @@ import Index from './views/index';
 import ItemDescription from './views/item-description';
 import ItemList from './views/item-list';
 
-class App extends Component {
-  render() {
-    return (
+export default class App extends Component {
+  render = () => (
       <React.Fragment>
         <BrowserRouter>
           <Switch>
@@ -17,8 +16,5 @@ class App extends Component {
           </Switch>
         </BrowserRouter>
       </React.Fragment>
-    );
-  }
+  );
 }
-
-export default App;

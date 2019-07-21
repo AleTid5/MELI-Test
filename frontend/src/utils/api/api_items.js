@@ -6,11 +6,7 @@ export default new (class ApiItems extends Api {
     super(config.apiUrl);
   }
 
-  searchItemById = async (productId) => {
-    return await this.getFrom(config.paths.getItemPath(productId))
-  }
+  searchItemById = async (productId) => await this.getFrom(config.paths.getItemPath(productId));
 
-  searchItems = async (searchInput) => {
-    return await this.getFrom(config.paths.getItemsListPath(searchInput))
-  }
+  searchItems = async (searchInput) => await this.getFrom(config.paths.getItemsListPath(searchInput));
 })();

@@ -9,7 +9,5 @@ export default class Api {
     });
   }
 
-  async getFrom(uri) {
-    return await this.api.get(uri).then(response => response.data);
-  }
+  getFrom = async uri => await this.api.get(uri).then(response => response.data);
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Search from '../components/search';
 
-class Index extends Component {
+export default class Index extends Component {
     constructor(props) {
         super(props)
         this.props = props;
@@ -10,13 +10,9 @@ class Index extends Component {
         }
     }
 
-    render() {
-        return (
-          <div className="app">
-              <Search props={this.props} search={this.props.location.search} history={this.props.history}/>
-          </div>
-        );
-    }
+    render = () => (
+        <div className="app">
+            <Search props={this.props} search={this.props.location.search} history={this.props.history}/>
+        </div>
+    );
 }
-
-export default Index;

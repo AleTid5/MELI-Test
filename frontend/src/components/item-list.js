@@ -20,16 +20,16 @@ class ItemList extends Component {
     isReady: false
   };
 
-  componentWillMount() {
+  componentWillMount = () => {
     this.search();
-  }
+  };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = prevProps => {
     if (prevProps.search !== this.props.search)
       this.search();
-  }
+  };
 
-  search() {
+  search = () => {
     if (this.getCleanSearch() !== "") {
       api.searchItems(this.getCleanSearch()).then(response => {
         this.setState({
@@ -39,13 +39,11 @@ class ItemList extends Component {
         });
       })
     }
-  }
+  };
 
-  getCleanSearch() {
-    return qs.parse(this.props.search, { ignoreQueryPrefix: true }).search;
-  }
+  getCleanSearch = () => qs.parse(this.props.search, {ignoreQueryPrefix: true}).search;
 
-  jumpToItem(item) {
+  jumpToItem = item => {
     this.props.history.push({
       pathname: '/items/' + item.id,
       state: {
@@ -53,9 +51,9 @@ class ItemList extends Component {
         search: this.props.search,
       }
     });
-  }
+  };
 
-  renderItemList() {
+  renderItemList = () => {
     if (! this.state.isReady) return (<Loader />);
 
     if (! this.state.items.length) return (<NoData />);
@@ -79,28 +77,26 @@ class ItemList extends Component {
           </div>
       );
     });
-  }
+  };
 
-  render() {
-    return (
-        <React.Fragment>
-          <Row>
-            <Col md={{ size: 8, offset: 2 }} className="pb-5">
-              <div className="text-left breadcrumbs">
-                <Breadcrumb categories={this.state.categories} />
-              </div>
-              <Card md="12" className="card-body">
-                <Row>
-                  <Col md="12" className="item-list">
-                    { this.renderItemList() }
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-          </Row>
-        </React.Fragment>
-    );
-  }
+  render = () => (
+      <React.Fragment>
+        <Row>
+          <Col md={{size: 8, offset: 2}} className="pb-5">
+            <div className="text-left breadcrumbs">
+              <Breadcrumb categories={this.state.categories}/>
+            </div>
+            <Card md="12" className="card-body">
+              <Row>
+                <Col md="12" className="item-list">
+                  {this.renderItemList()}
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        </Row>
+      </React.Fragment>
+  );
 }
 
 export default ItemList;

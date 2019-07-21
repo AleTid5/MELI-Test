@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Search from '../components/search';
 import Item from '../components/item';
 
-class ItemDescription extends Component {
+export default class ItemDescription extends Component {
 
-    render() {
+    render = () => {
         const currentState = this.props.location.state;
         return (
             <React.Fragment>
@@ -14,7 +14,5 @@ class ItemDescription extends Component {
                 </div>
             </React.Fragment>
         );
-    }
+    };
 }
-
-export default ItemDescription;

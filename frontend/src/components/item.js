@@ -20,16 +20,16 @@ class Item extends Component {
     isReady: false
   };
 
-  componentWillMount() {
+  componentWillMount = () => {
     this.search();
-  }
+  };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = prevProps => {
     if (prevProps.search !== this.props.search)
       this.search();
-  }
+  };
 
-  search() {
+  search = () => {
     const itemId = this.props.props.match.params.id;
 
     api.searchItemById(itemId).then(response => {
@@ -38,9 +38,9 @@ class Item extends Component {
         isReady: true
       });
     })
-  }
+  };
 
-  renderItem() {
+  renderItem = () => {
     if (! this.state.isReady) return (<Loader />);
 
     if (! Object.keys(this.state.item).length) return (<NoData />);
@@ -62,24 +62,25 @@ class Item extends Component {
           </Col>
         </Row>
     );
-  }
+  };
 
-  render() {
-    return (
-        <React.Fragment>
-          <Row>
-            <Col md={{ size: 8, offset: 2 }} className="pb-5">
-              <div className="text-left breadcrumbs">
-                <Breadcrumb categories={this.state.categories} />
-              </div>
-              <Card md="12" className="card-body item-description">
-                { this.renderItem() }
-              </Card>
-            </Col>
-          </Row>
-        </React.Fragment>
-    );
-  }
+  render = () => (
+      <React.Fragment>
+        <Row>
+          <Col md={{size: 8, offset: 2}} className="pb-5">
+            <div className="text-left breadcrumbs">
+              <Breadcrumb categories={this.state.categories}
+                          history={this.props.props.history}
+                          search={this.props.props.location.state ? this.props.props.location.state.search : null}
+                          withBack={true}/>
+            </div>
+            <Card md="12" className="card-body item-description">
+              {this.renderItem()}
+            </Card>
+          </Col>
+        </Row>
+      </React.Fragment>
+  );
 }
 
 export default Item;

@@ -1,11 +1,9 @@
 import React, { Component } from "react"
 
 export default class Loader extends Component {
-  render() {
-    return (
+  render = () => (
       <div className="text-center">
-        <div className="loader" />
+        <div className="loader"/>
       </div>
-    );
-  }
+  );
 }

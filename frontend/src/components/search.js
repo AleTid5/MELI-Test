@@ -25,47 +25,41 @@ class Search extends Component {
         }
     }
 
-    onSearchChange = (value) => {
-        this.setState({ search: { value: value } });
-    }
+    onSearchChange = (value) => this.setState({ search: { value: value } });
 
-    backToIndex = () => {
-        this.props.history.push('/');
-    }
+    goBack = () => this.props.history.push('/');
 
-    render() {
-        return (
-          <React.Fragment>
-              <div className="app-header">
-                  <Row>
-                      <Col md={{ size: 1, offset: 2 }}
-                           sm={{ size: 1 }}
-                           xs={{ size: 2 }}>
-                          <img src={logoImg} onClick={this.backToIndex} alt="LOGO" className="clickable"/>
-                      </Col>
-                      <Col md={{ size: 7, offset: 0 }}
-                           sm={{ size: 10 }}
-                           xs={{ size: 9, offset: 1 }}>
-                          <InputGroup>
-                              <Input
+    render = () => (
+        <React.Fragment>
+            <div className="app-header">
+                <Row>
+                    <Col md={{size: 1, offset: 2}}
+                         sm={{size: 1}}
+                         xs={{size: 2}}>
+                        <img src={logoImg} onClick={this.goBack} alt="LOGO" className="clickable"/>
+                    </Col>
+                    <Col md={{size: 7, offset: 0}}
+                         sm={{size: 10}}
+                         xs={{size: 9, offset: 1}}>
+                        <InputGroup>
+                            <Input
                                 className="input-search"
                                 placeholder="Nunca dejes de buscar"
                                 defaultValue={this.state.search.value}
                                 onChange={event => this.onSearchChange(event.target.value)}
                                 onKeyPress={this.onKeyPress}
-                              />
-                              <InputGroupAddon addonType="append">
-                                  <Button className="btn-search" onClick={this.onSearch}>
-                                      <img src={searchIcon} alt="SEARCH_ICON" />
-                                  </Button>
-                              </InputGroupAddon>
-                          </InputGroup>
-                      </Col>
-                  </Row>
-              </div>
-          </React.Fragment >
-        );
-    }
+                            />
+                            <InputGroupAddon addonType="append">
+                                <Button className="btn-search" onClick={this.onSearch}>
+                                    <img src={searchIcon} alt="SEARCH_ICON"/>
+                                </Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                    </Col>
+                </Row>
+            </div>
+        </React.Fragment>
+    );
 }
 
 export default Search;
