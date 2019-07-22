@@ -24,3 +24,15 @@ npm start
 El servidor utiliza el puerto 9000 para operar, mientras que el cliente utiliza el 3000.
 
 Navegue a http://localhost:3000 and have fun! :)
+
+## Tests
+###### Backend
+```
+cd backend 
+npm test
+```
+###### Frontend
+```
+cd frontend 
+npm test
+```
